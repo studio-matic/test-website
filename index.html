@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sign Up</title>
+<style>
+body {
+    font-family: system-ui, sans-serif;
+    max-width: 480px;
+    margin: 120px auto;
+}
+input {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+}
+button {
+    margin-top: 12px;
+    padding: 12px;
+    font-size: 18px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<h2>Sign up</h2>
+<input type="email" id="email" placeholder="email">
+<button onclick="register()">Submit</button>
+
+<script>
+async function register() {
+    const email = document.getElementById("email").value;
+    const res = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify({email})
+    });
+    alert(await res.text());
+}
+</script>
+
+</body>
+</html>

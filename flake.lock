@@ -1,0 +1,64 @@
+{
+  "nodes": {
+    "ides": {
+      "locked": {
+        "lastModified": 1745544839,
+        "narHash": "sha256-txpc7CvS5J/rCw0cXbQr0oHesZ4rtj5/TWnASUNkfAQ=",
+        "ref": "refs/heads/master",
+        "rev": "451a384b9706553460f44bb1efc776a3064c4d18",
+        "revCount": 18,
+        "type": "git",
+        "url": "https://git.atagen.co/atagen/ides"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.atagen.co/atagen/ides"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1730785428,
+        "narHash": "sha256-Zwl8YgTVJTEum+L+0zVAWvXAGbWAuXHax3KzuejaDyo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4aa36568d413aca0ea84a1684d2d46f55dbabad7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "oxalica-rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762396738,
+        "narHash": "sha256-BarSecuxtzp1boERdABLkkoxQTi6s/V33lJwUbWLrLY=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "c63598992afd54d215d54f2b764adc0484c2b159",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "ides": "ides",
+        "nixpkgs": "nixpkgs",
+        "oxalica-rust-overlay": "oxalica-rust-overlay"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
