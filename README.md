@@ -5,5 +5,5 @@ Otherwise in the spawned shell you'll want to run just `./start.sh offline` to s
 
 ## How to deploy
 [Install the `nix` package manager](https://nixos.org/download/) then run `nix develop . --no-pure-eval`.  
-Run `./start.sh online` which relies on the database being set up interactively and also relies on a `DATABASE_URL=mysql://USERNAME:PASSWORD@sm-mysql-rabbit.internal/db` secret being set up.
-The front is hosted on https://studio-matic.github.io/test-website
+Run `./start.sh online` which relies on the database being set up interactively and also relies on a `DATABASE_URL=mysql://USERNAME:PASSWORD@sm-mysql-rabbit.internal/db` secret being set up.  
+The front is hosted on https://studio-matic.github.io/test-website you can update it by doing `git subtree push --prefix front origin gh-pages`
