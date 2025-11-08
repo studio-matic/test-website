@@ -54,12 +54,13 @@
           packages = with pkgs;
             [
               taplo
-              (rust-bin.fromRustupToolchainFile ./rust-toolchain.toml)
+              (rust-bin.fromRustupToolchainFile ./back/rust-toolchain.toml)
             ]
             ++ [
               mprocs
               mariadb-client
               miniserve
+              flyctl
             ];
           DATABASE_URL = "mysql://root@localhost/db?socket=${socket}";
           imports = [

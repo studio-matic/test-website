@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for sm-mysql-rabbit on 2025-11-08T05:11:10Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'sm-mysql-rabbit'
+primary_region = 'fra'
+
+[build]
+image = 'mysql:9.5.0'
+
+[processes]
+app = '--datadir /data/mysql'
+
+[[mounts]]
+source = 'mysqldata'
+destination = '/data'
+
+[[vm]]
+memory = '1gb'
+cpu_kind = 'shared'
+cpus = 1

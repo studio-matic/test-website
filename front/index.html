@@ -31,7 +31,11 @@ button {
 <script>
 async function register() {
     const email = document.getElementById("email").value;
-    const res = await fetch("http://localhost:3000/register", {
+    const baseUrl = window.location.hostname === "localhost"
+        ? "http://localhost:3000"
+        : "https://test-sm-website.fly.dev";
+
+    const res = await fetch(`${baseUrl}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify({email})
