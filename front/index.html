@@ -26,16 +26,22 @@ button {
 
 <div id="status"></div>
 <script>
+    const el = document.getElementById("status");
+    el.innerText = "checking backend ⏳";
     async function checkBackend() {
         const baseUrl = window.location.hostname === "localhost"
             ? "http://localhost:3000"
             : "https://test-sm-website.fly.dev";
 
         const el = document.getElementById("status");
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
         try {
-            const r = await fetch(`${baseUrl}/health`, {method: "GET"});
+            const r = await fetch(`${baseUrl}/health`, {method: "GET", signal: controller.signal});
+            clearTimeout(timeoutId);
             el.innerText = r.ok ? "backend online ✅" : "backend offline ❌";
         } catch (_) {
+            clearTimeout(timeoutId);
             el.innerText = "backend offline ❌"
         }
     }
