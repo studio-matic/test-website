@@ -1,10 +1,15 @@
-use axum::{Json, Router, extract::State, routing};
+use axum::{
+    Json, Router,
+    extract::State,
+    http::{HeaderValue, Method},
+    routing,
+};
 use serde::{Deserialize, Serialize};
 use sqlx::MySqlPool;
 use std::{env, net::SocketAddr};
 use tokio::net::TcpListener;
 use tower_governor::{GovernorLayer, governor::GovernorConfig};
-use tower_http::cors::{Any, CorsLayer};
+use tower_http::cors::{AllowOrigin, Any, CorsLayer};
 
 #[tokio::main]
 async fn main() {
@@ -19,8 +24,16 @@ async fn main() {
         .layer(GovernorLayer::new(GovernorConfig::default()))
         .layer(
             CorsLayer::new()
-                .allow_origin(Any)
-                .allow_methods(Any)
+                .allow_origin({
+                    let x: AllowOrigin = if let Ok(e) = env::var("FRONT_URL") {
+                        HeaderValue::from_str(&e).expect("Invalid FRONT_URL").into()
+                    } else {
+                        eprintln!("WARNING: FRONT_URL unset, allowing all origins for CORS");
+                        Any.into()
+                    };
+                    x
+                })
+                .allow_methods([Method::GET, Method::POST])
                 .allow_headers(Any),
         )
         .into_make_service_with_connect_info::<SocketAddr>();
