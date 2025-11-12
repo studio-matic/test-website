@@ -26,13 +26,11 @@ async fn main() {
         .into_make_service_with_connect_info::<SocketAddr>();
 
     let port = env::var("PORT").expect("PORT must be set");
-    let listener_ipv4 = TcpListener::bind(format!("0.0.0.0:{port}")).await.unwrap();
-    let listener_ipv6 = TcpListener::bind(format!("::1:{port}")).await.unwrap();
-    println!("Listening on http://[::1]:{port} and http://0.0.0.0:{port} ...");
-    tokio::select! {
-        _ = axum::serve(listener_ipv4, app.clone()) => {},
-        _ = axum::serve(listener_ipv6, app) => {},
-    }
+    let listener = TcpListener::bind(format!("[::]:{port}"))
+        .await
+        .unwrap_or_else(|_| panic!("Unable to bind http://[::]:{port} and 0.0.0.0:{port}"));
+    println!("Listening on http://[::]:{port} and http://0.0.0.0:{port} ...");
+    axum::serve(listener, app).await.unwrap();
 }
 
 #[derive(Deserialize)]
