@@ -15,7 +15,7 @@ use tower_http::cors::{AllowOrigin, Any, CorsLayer};
 async fn main() {
     let pool = MySqlPool::connect(&env::var("DATABASE_URL").expect("DATABASE_URL must be set"))
         .await
-        .unwrap();
+        .expect("Unable to connect to mysql database");
 
     let app = Router::new()
         .route("/register", routing::post(register))
