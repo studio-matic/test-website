@@ -50,10 +50,16 @@ in {
             if [ ! -f "${cfg.dataDir}/mysql/user.frm" ]; then
               echo "Initializing MariaDB data directory at ${cfg.dataDir}"
               ${pkgs.mariadb}/bin/mariadb-install-db \
+                --no-defaults \
                 --datadir="${cfg.dataDir}" \
                 --auth-root-authentication-method=normal
             fi
-          ${pkgs.mariadb}/bin/mariadbd --datadir="${cfg.dataDir}" --socket="${cfg.socket}" ${cfg.extraArgs}
+          ${pkgs.mariadb}/bin/mariadbd \
+            --no-defaults \
+            --datadir="${cfg.dataDir}" \
+            --skip-networking \
+            --socket="${cfg.socket}" \
+            ${cfg.extraArgs}
         '';
       exec = cfg.name;
       config.format = "ini";
