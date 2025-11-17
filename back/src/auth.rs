@@ -10,6 +10,7 @@ use axum::{
 };
 use serde::{Deserialize, Serialize};
 use sqlx::{MySqlPool, Row};
+use rand::Rng;
 use std::time::Duration;
 
 const SESSION_TOKEN_MAX_AGE: Duration = Duration::from_hours(1);
@@ -21,14 +22,11 @@ pub struct SignRequest {
 }
 
 fn generate_session_token() -> String {
-    (0..64)
-        .map(|_| {
-            const BASE64_ALPHABET: &[u8] =
-                b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-            let idx = rand::random_range(0..BASE64_ALPHABET.len());
-            BASE64_ALPHABET[idx] as char
-        })
-        .collect::<String>()
+    rand::rng()
+        .sample_iter(&rand::distr::Alphanumeric)
+        .take(64)
+        .map(char::from)
+        .collect()
 }
 
 pub async fn signup(
