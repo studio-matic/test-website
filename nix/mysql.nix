@@ -45,15 +45,15 @@ in {
       pkg =
         pkgs.writeShellScriptBin config.serviceDefs.${cfg.name}.exec
         ''
-            mkdir -p ${cfg.dataDir}
-            mkdir -p $(dirname ${cfg.socket})
+            mkdir -p "${cfg.dataDir}"
+            mkdir -p "$(dirname "${cfg.socket}")"
             if [ ! -f "${cfg.dataDir}/mysql/user.frm" ]; then
               echo "Initializing MariaDB data directory at ${cfg.dataDir}"
               ${pkgs.mariadb}/bin/mariadb-install-db \
-                --datadir=${cfg.dataDir} \
+                --datadir="${cfg.dataDir}" \
                 --auth-root-authentication-method=normal
             fi
-          ${pkgs.mariadb}/bin/mariadbd --datadir=${cfg.dataDir} --socket=${cfg.socket} ${cfg.extraArgs}
+          ${pkgs.mariadb}/bin/mariadbd --datadir="${cfg.dataDir}" --socket="${cfg.socket}" ${cfg.extraArgs}
         '';
       exec = cfg.name;
       config.format = "ini";
