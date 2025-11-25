@@ -99,12 +99,12 @@ pub async fn signup(
                     header::SET_COOKIE,
                     #[cfg(debug_assertions)]
                     format!(
-                        "session_token={token}; Max-Age={}; HttpOnly",
+                        "session_token={token}; Max-Age={}; Path=/; HttpOnly",
                         SESSION_TOKEN_MAX_AGE.as_secs()
                     ),
                     #[cfg(not(debug_assertions))]
                     format!(
-                        "session_token={token}; Max-Age={}; HttpOnly; Secure; SameSite=None",
+                        "session_token={token}; Max-Age={}; Path=/; HttpOnly; Secure; SameSite=None",
                         SESSION_TOKEN_MAX_AGE.as_secs()
                     ),
                 )]),
