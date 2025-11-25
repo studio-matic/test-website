@@ -43,7 +43,7 @@ pub async fn signin(
     Json(req): Json<SignRequest>,
 ) -> impl IntoResponse {
     let hashed_password = if let Some(v) =
-        sqlx::query("SELECT (password) FROM accounts WHERE email = ?")
+        sqlx::query("SELECT password FROM accounts WHERE email = ?")
             .bind(&req.email)
             .fetch_optional(&pool)
             .await

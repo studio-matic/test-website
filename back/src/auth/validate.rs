@@ -47,7 +47,7 @@ pub async fn validate(State(pool): State<MySqlPool>, headers: HeaderMap) -> impl
             )
                 .into_response();
         };
-        match sqlx::query("SELECT (email) FROM sessions WHERE token = ?")
+        match sqlx::query("SELECT email FROM sessions WHERE token = ?")
             .bind(session_token)
             .fetch_optional(&pool)
             .await
