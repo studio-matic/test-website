@@ -1,5 +1,6 @@
 mod auth;
 mod donations;
+mod supporters;
 use axum::{
     Router,
     http::{self, HeaderValue, Method, header, request::Parts},
@@ -29,6 +30,7 @@ fn openapi() -> utoipa::openapi::OpenApi {
     api.merge(me::openapi());
     api.merge(health::openapi());
     api.merge(donations::openapi());
+    api.merge(supporters::openapi());
     api
 }
 
@@ -49,6 +51,7 @@ async fn main() {
         .route("/auth/validate", routing::get(auth::validate))
         .route("/me", routing::get(me::me))
         .route("/donations", routing::get(donations::donations))
+        .route("/supporters", routing::get(supporters::supporters))
         .with_state(pool)
         .layer(GovernorLayer::new(GovernorConfig::default()))
         .layer(
@@ -94,6 +97,8 @@ enum ApiError {
     Signup(#[from] auth::signup::SignupError),
     #[error("could not get donations: {0}")]
     Donation(#[from] donations::DonationError),
+    #[error("could not get supporters: {0}")]
+    Supporter(#[from] supporters::SupporterError),
 }
 
 impl IntoResponse for ApiError {
@@ -103,6 +108,7 @@ impl IntoResponse for ApiError {
             ApiError::Signin(e) => e.into_response(),
             ApiError::Signup(e) => e.into_response(),
             ApiError::Donation(e) => e.into_response(),
+            ApiError::Supporter(e) => e.into_response(),
         }
     }
 }
