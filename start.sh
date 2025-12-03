@@ -14,7 +14,7 @@ if [ "${1-}" = "online" ]; then
     } >/dev/null 2>&1 &
   fi
   mprocs --names="proxy db, db shell" \
-    "fly -c db-fly-io/fly.toml proxy 3306 -b '[::]' -a sm-mysql-rabbit" \
+    "fly -c db-fly-io/fly.toml proxy 3306 -b '[::]'" \
     "mariadb --protocol=tcp -h localhost -P 3306 -u dev -p"
 elif [ "${1-}" = "offline" ]; then
   ides start && sleep 1
